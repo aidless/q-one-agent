@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aidless/q-one-agent/blob/main/schemas/recommendation.schema.json",
+  "title": "Q-One recommendation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["decision_id", "option_id", "confidence", "rationale", "source", "gate_reasons", "requires_human", "auto_eligible"],
+  "properties": {
+    "decision_id": {"type": "string", "minLength": 1},
+    "option_id": {"type": "string", "minLength": 1},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "success_probability": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+    "rationale": {"type": "string", "minLength": 1},
+    "source": {"type": "string", "minLength": 1},
+    "gate_reasons": {"type": "array", "items": {"type": "string"}},
+    "requires_human": {"const": true},
+    "auto_eligible": {"const": false}
+  }
+}

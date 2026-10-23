@@ -1,0 +1,23 @@
+{
+  "project": {
+    "title": "Q-One Agent",
+    "domain": "provider-neutral recommendation orchestration",
+    "status": "active",
+    "version": "0.1.0"
+  },
+  "research_question": "How can model and rule providers produce inspectable recommendations under one human-reviewed contract?",
+  "hypotheses": [
+    {
+      "id": "H1",
+      "text": "A narrow provider interface makes model routing replaceable without changing the decision ledger."
+    },
+    {
+      "id": "H2",
+      "text": "Explicit evidence limitations reduce the chance that generated rationale is mistaken for verified fact."
+    }
+  ],
+  "loop": {"phase": "M1", "iteration": 1, "next_review": "after adapter replay is stable"},
+  "experiments": [],
+  "artifacts": [],
+  "reviews": []
+}

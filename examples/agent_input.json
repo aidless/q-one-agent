@@ -1,0 +1,15 @@
+{
+  "decision_id": "D-20261023-example",
+  "question": "下周一上午先写初稿还是先开同步会？",
+  "domain": "work",
+  "success_criterion": "在周一 12:00 前产出可供评审的初稿或形成明确会议结论",
+  "deadline": "2026-10-26T12:00:00-07:00",
+  "reversible": true,
+  "risk": "low",
+  "context": "用户提供的低风险日程选择示例。",
+  "baseline": {"option_id": "draft", "note": "human baseline"},
+  "options": [
+    {"id": "draft", "label": "先写初稿", "expected_cost_hours": 2},
+    {"id": "meeting", "label": "先开同步会", "expected_cost_hours": 1}
+  ]
+}
