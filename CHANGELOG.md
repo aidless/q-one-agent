@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.0 — 2026-10-24
+
+- Added real Ollama, Laya worker and configurable cloud adapters.
+- Added allowlisted inputs, structured output validation, safe errors and call receipts.
+- Added explicit transport and failure tests.
+
 ## Unreleased
 
 - Added source-linked Chinese research synthesis and implementation priorities.

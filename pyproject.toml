@@ -4,16 +4,17 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "q-one-agent"
-version = "0.1.0"
+version = "0.2.0"
 description = "Provider-neutral orchestration for the Q-One decision protocol."
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
 authors = [{name = "Q-One contributors"}]
-dependencies = []
+dependencies = ["httpx>=0.27,<1"]
 
 [project.optional-dependencies]
-http = ["httpx>=0.27"]
+http = ["httpx>=0.27,<1"]
+laya = ["laya==0.4.14"]
 
 [project.scripts]
 qone-agent = "qone_agent.cli:main"
