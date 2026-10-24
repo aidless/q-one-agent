@@ -1,5 +1,7 @@
 # Q-One Agent
 
+> 中文研究入口：[多学科融合实现路线](docs/SYNTHESIS_IMPLEMENTATION.zh-CN.md)。当前为初版原型，真实模型接入与端到端验收尚未完成。
+
 Q-One Agent is the second repository in the Q-One system. It routes a structured decision to a provider, captures evidence limitations, and emits a recommendation that `q-one-core` can record. It is provider-neutral by design: a local rule, an open-source model, or a Laya/Jev-style adapter can implement the same interface without changing the ledger.
 
 The included provider is a deterministic cost heuristic. It is a wiring example, not a capable general model and not a calibrated forecast.
@@ -15,9 +17,9 @@ The agent receives a core decision projection containing a recorded baseline. It
 ## Quick start
 
 ```bash
-python -m venv .venv
+python3 -m venv .venv
 . .venv/bin/activate
-python -m pip install -e .
+python3 -m pip install -e .
 
 qone-agent providers
 qone-agent recommend --decision-file examples/agent_input.json

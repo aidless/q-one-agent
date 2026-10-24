@@ -21,4 +21,4 @@ Freeze:
 
 Report option accuracy, baseline agreement, override rate, calibration when probabilities are supplied, latency, cost, and abstention rate. Separate descriptive replay results from any user-facing claim.
 
-The terms “Laya” and “Jev” are treated as user-provided model or workflow labels until a primary paper, model card, or repository is attached. An adapter should record the exact source rather than inferring identity from a nickname.
+Laya has been identified as [NandhaKishorM/laya](https://github.com/NandhaKishorM/laya), with a model card at [convaiinnovations/laya](https://huggingface.co/convaiinnovations/laya). Jev is documented by [TypeSafe AI](https://docs.typesafe.ai/introduction). These primary sources were checked on 2026-10-23; no real provider has been integrated or evaluated here yet. See the [Chinese synthesis implementation plan](SYNTHESIS_IMPLEMENTATION.zh-CN.md) for source-linked next steps.
