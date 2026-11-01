@@ -52,3 +52,58 @@ This repository is MIT licensed.
 Install the optional Laya dependency with `pip install '.[laya]'`; weights and PyTorch are not included in the base package. The multilingual checkpoint is pinned to `1720e3e3357cfe1e281542e223f8273b0890ca34`. Oversized/truncated Laya inputs are rejected. Laya produces a choice, not a generated explanation. All runtime outputs leave `success_probability=null`; their confidence is not validated on personal outcomes.
 
 Run contract checks with `python -m unittest discover -s tests -v`. They use mock HTTP transport and a mocked truncation result, not real accuracy data.
+
+## 测试与复算
+
+### 测试（2026-11-01 实测）
+
+```bash
+# 在仓库外建 venv（路径含字面反斜杠与冒号，`F:\deepseek`，venv 拒绝建在
+# 含 `:` 的路径里——这是 Python venv 对 PATH 分隔符的硬性拒绝，不是本仓缺陷）
+python3 -m venv /tmp/qone-venv
+/tmp/qone-venv/bin/pip install -e .
+/tmp/qone-venv/bin/python -m pytest tests/ -q     # 9 passed, 6 subtests passed
+```
+
+或按 README 顶部与 CI 的 unittest 方式：
+
+```bash
+python3 -m unittest discover -s tests -v
+```
+
+测试覆盖：云端契约（mock 传输）、远程未经确认拒绝发送、未知选项/非法强度
+拒绝、错误不泄露服务体或密钥、Ollama 契约、内置本地 OpenAI 兼容契约、
+Laya 截断 mock 等——均为**mock 传输，无真实准确率数据**。
+
+## 证明什么 / 不证明什么
+
+**证明什么**：`run_model` 对 provider 中性接口的契约正确性——云端/Ollama/Laya
+适配器都走同一 `ProviderResult` 校验；远程端点绑定确认（内容+端点+模型预览）；
+字段 allowlist 过滤；错误不泄露密钥；`success_probability=null` 契约。
+
+**不证明什么**：
+- 测试用 **mock HTTP 传输与 mock 截断结果**，**不含任何真实模型准确率**——
+  本仓不声称对个人决策结果做经验验证（README 顶部已明确 "Laya and Ollama
+  have real synthetic connectivity receipts; cloud transport is fixture-tested,
+  not live-provider verified"）。
+- 内置 CLI 的确定性成本启发式**不替代**真实 `run_model`（README 顶部已声明）。
+- Laya 权重与 PyTorch **不在基础包**内（`pip install '.[laya]'` 只装依赖，
+  权重/运行时需另行提供）；多语言 checkpoint 固定在
+  `1720e3e3357cfe1e281542e223f8273b0890ca34`。
+- 本仓是**决策路由/适配层**，**不写**人的决策、**不标**推荐可自动执行
+  （`requires_human=true`, `auto_eligible=false` 强制）。
+
+## 目录结构
+
+```
+q-one-agent/
+├── src/qone_agent/          # 核心包：contracts / engine / evidence / policy
+│   ├── cli.py               # qone-agent 命令行（默认成本启发式，仅演示）
+│   ├── runtime.py           # run_model：真实 Ollama/Laya/云端 适配器
+│   └── providers/           # base / rule 适配器契约
+├── schemas/recommendation.schema.json
+├── docs/                    # ADAPTER_CONTRACT / MODEL_RESEARCH / 中文实现路线
+├── examples/agent_input.json
+├── tests/test_runtime.py    # mock 传输契约测试（9 + 6 subtests）
+└── pyproject.toml           # 入口 qone-agent = qone_agent.cli:main
+```
