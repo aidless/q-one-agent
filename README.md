@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/aidless/q-one-agent/actions/workflows/checks.yml/badge.svg)](https://github.com/aidless/q-one-agent/actions/workflows/checks.yml)
 
+> **English TL;DR**: Q-One Agent is the second repository in the Q-One system: it routes a structured decision to a provider (local rule, Ollama, Laya adapter, or a confirmed cloud endpoint), captures evidence limitations, and emits a recommendation that q-one-core can record. Install with `pip install -e .` and run `qone-agent recommend --decision-file examples/agent_input.json`. Provider-neutral by adapter contract, it never writes the human decision and never marks a recommendation as safe for automatic execution.
+
 > 中文研究入口：[多学科融合实现路线](docs/SYNTHESIS_IMPLEMENTATION.zh-CN.md)。v0.2 已接入真实 Laya、Ollama 与云端兼容适配器；[完整个人应用与验收](https://github.com/aidless/q-one-life)。
 
 Q-One Agent is the second repository in the Q-One system. It routes a structured decision to a provider, captures evidence limitations, and emits a recommendation that `q-one-core` can record. It is provider-neutral by design: a local rule, an open-source model, or a Laya/Jev-style adapter can implement the same interface without changing the ledger.
