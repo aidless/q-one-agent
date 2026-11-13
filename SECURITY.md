@@ -1,9 +1,11 @@
-# Security and privacy
+# Security Policy
 
-The agent can be connected to hosted models, so callers must treat prompts, retrieved documents, and outputs as sensitive.
+## Supported Versions
 
-- Do not put credentials in source or run artifacts.
-- Make provider routing explicit before sending personal context over a network.
-- Redact or hash private inputs in run records.
-- Restrict tools and retrieval sources to the minimum needed for a decision.
-- Record provider failures and abstentions rather than hiding them behind a fallback.
+This is a personal research project; only the latest commit on the default branch is supported.
+
+## Reporting a Vulnerability
+
+If you discover a security issue, please **open a private GitHub security advisory** via this repository's **Security → Report a vulnerability** button (https://github.com/aidless/q-one-agent/security/advisories/new), or contact the maintainer through their GitHub profile. Please do not open a public issue for exploit details.
+
+You can expect an initial response within 7 days.
