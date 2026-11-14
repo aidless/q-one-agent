@@ -1,0 +1,129 @@
+{
+ "total": 20,
+ "passed": 20,
+ "failed": 0,
+ "selftest": false,
+ "failed_by_axis": {},
+ "results": [
+  {
+   "id": "CT-01",
+   "axis": "contracts/option",
+   "ok": true,
+   "detail": "draft|先写初稿|3.0"
+  },
+  {
+   "id": "CT-02",
+   "axis": "contracts/option",
+   "ok": true,
+   "detail": "raised ContractError"
+  },
+  {
+   "id": "CT-03",
+   "axis": "contracts/decision",
+   "ok": true,
+   "detail": "raised ContractError"
+  },
+  {
+   "id": "CT-04",
+   "axis": "contracts/decision",
+   "ok": true,
+   "detail": "raised ContractError"
+  },
+  {
+   "id": "CT-05",
+   "axis": "contracts/recommendation",
+   "ok": true,
+   "detail": "raised ContractError"
+  },
+  {
+   "id": "CT-06",
+   "axis": "contracts/recommendation",
+   "ok": true,
+   "detail": "True|False|1"
+  },
+  {
+   "id": "PO-01",
+   "axis": "policy/gates",
+   "ok": true,
+   "detail": "low_confidence,insufficient_personal_calibration"
+  },
+  {
+   "id": "PO-02",
+   "axis": "policy/gates",
+   "ok": true,
+   "detail": "0"
+  },
+  {
+   "id": "PO-03",
+   "axis": "policy/gates",
+   "ok": true,
+   "detail": "high_risk,irreversible"
+  },
+  {
+   "id": "PR-01",
+   "axis": "provider/cost-heuristic",
+   "ok": true,
+   "detail": "a|0.5"
+  },
+  {
+   "id": "PR-02",
+   "axis": "provider/cost-heuristic",
+   "ok": true,
+   "detail": "meeting|0.55"
+  },
+  {
+   "id": "EN-01",
+   "axis": "engine/pipeline",
+   "ok": true,
+   "detail": "meeting|low_confidence,insufficient_personal_calibration|user_supplied_context_not_independently_verified"
+  },
+  {
+   "id": "EN-02",
+   "axis": "engine/pipeline",
+   "ok": true,
+   "detail": "raised ValueError"
+  },
+  {
+   "id": "EV-01",
+   "axis": "evidence/limitations",
+   "ok": true,
+   "detail": "0|empty_context"
+  },
+  {
+   "id": "RT-01",
+   "axis": "runtime/allowlist",
+   "ok": true,
+   "detail": "context,deadline,domain,evidence,options,question,reversible,risk,success_criterion"
+  },
+  {
+   "id": "RT-02",
+   "axis": "runtime/validation",
+   "ok": true,
+   "detail": "raised ProviderError"
+  },
+  {
+   "id": "SC-01",
+   "axis": "schemas/contract",
+   "ok": true,
+   "detail": "8|decision_id,option_id,confidence,rationale,source,gate_reasons,requires_human,auto_eligible"
+  },
+  {
+   "id": "DOC-01",
+   "axis": "docs/contract",
+   "ok": true,
+   "detail": "immutable provider and version identifie"
+  },
+  {
+   "id": "DOC-02",
+   "axis": "docs/contract",
+   "ok": true,
+   "detail": "input decision hash and output recommend"
+  },
+  {
+   "id": "TK-01",
+   "axis": "tests/declared-count",
+   "ok": true,
+   "detail": "9"
+  }
+ ]
+}

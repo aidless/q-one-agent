@@ -151,3 +151,48 @@ Provider adapters must not log raw private context by default. Evidence records 
 - All runtime outputs leave `success_probability=null`; no confidence value in this repo is validated against personal outcomes.
 
 This repository is MIT licensed.
+
+## 验收题库与复算
+
+`eval/cases.jsonl` 是 20 条可执行验收题，覆盖十二个口径（契约边界、policy 门、成本启发式、
+engine 路由与端到端、evidence 局限、runtime 字段白名单与输出校验、schema 形状、`docs/` 契约
+措辞、测试声明条数）。其中 **18 条是 `expr` / `raises`**，期望值不是抄文档，而是**真调本仓
+API 或真解析本仓数据文件**现算 (`qone_agent.contracts` / `policy` / `providers.rule` /
+`engine` / `evidence` / `runtime`，以及 `examples/agent_input.json`、
+`schemas/recommendation.schema.json`、`tests/test_runtime.py`)；另 2 条 `doc` 题钉住
+`docs/` 里写死的契约措辞。
+
+| axis | 条数 | 题号 | 考什么 |
+|---|---|---|---|
+| contracts/option | 2 | CT-01、CT-02 | id/label 去空白 + 成本转 float；`expected_cost_hours=True` 必须拒（布尔不算数字） |
+| contracts/decision | 2 | CT-03、CT-04 | 选项数上界（9 个即拒）；`baseline.option_id` 必须落在选项集内 |
+| contracts/recommendation | 2 | CT-05、CT-06 | `confidence=1.5` 拒绝；`requires_human=True` / `auto_eligible=False` 默认组合 |
+| policy/gates | 3 | PO-01–PO-03 | 0.55+未校准的 gate 组合与顺序；`0.70`/`n=20` 边界清零；high risk + 不可逆的 reason 顺序 |
+| provider/cost-heuristic | 2 | PR-01、PR-02 | 成本并列时按 id 决胜、confidence=0.50；`examples/agent_input.json` 实选 `meeting`/0.55 |
+| engine/pipeline | 2 | EN-01、EN-02 | 端到端选项+gate_reasons+evidence 局限；未注册 provider 抛 `ValueError` |
+| evidence/limitations | 1 | EV-01 | 空白 context → 0 条目 + `empty_context` |
+| runtime/allowlist | 1 | RT-01 | `public_context` 的 9 个白名单键（`events` 必须消失） |
+| runtime/validation | 1 | RT-02 | provider 用 `confidence=True` 冒充数字必须被 `ProviderError` 拦下 |
+| schemas/contract | 1 | SC-01 | `recommendation.schema.json` 的 8 个 `required` 字段与顺序 |
+| docs/contract | 2 | DOC-01、DOC-02 | 适配器 `source` 不可变；模型凭证要冻结「输入哈希 + 输出推荐」 |
+| tests/declared-count | 1 | TK-01 | `tests/test_runtime.py` 用 ast 数出 9 个 `test_` 方法（README 声称 9） |
+
+```bash
+python3 eval/run_cases.py            # 20/20 cases passed
+python3 eval/run_cases.py --save     # 顺带把结果写进 eval/run-report.json
+python3 eval/run_cases.py --selftest # 篡改第一条期望值，必须变红（19/20）
+```
+
+退出码：`0` 全过、`1` 有 case 失败、`2` 题库自身坏了（读不到/缺字段/重复 id）；
+`--selftest` 的判据是**变红**（`19/20` + `contracts/option: 1 条 —— CT-01`），
+它变红才说明这套题会失败，全绿反而是装饰。
+
+**数字如何复算**：每题 `verify` 就是一段可执行 Python——`expr` 以 `result = ...` 收尾，
+`raises` 要求抛出的异常类名等于 `expected`，`doc` 是 `相对路径::正则`。把某题的 `verify`
+粘进 `python3` 即可复现该数字；`eval/run-report.json` 里每条 case 带 `id` / `axis` /
+`detail`，`--save` 重跑一次就重建整份报告，不需要手工抄数。每题的 verify 头三行会把
+`<repo>/src` 插进 `sys.path`，所以**裸克隆（未 `pip install -e .`）也能跑**；改了
+`contracts.py` / `policy.py` / `rule.py` 里任一常量或边界，对应题立刻变红。
+
+**失败归因**：`run_cases.py` 不只报通过率，失败时按 `axis` 汇总，例如
+`policy/gates: 1 条 —— PO-02`，直接指出是哪个模块的哪个口径坏了，而不是只给一个 pass_rate。
