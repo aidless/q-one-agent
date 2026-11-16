@@ -3,7 +3,7 @@
     "title": "Q-One Agent",
     "domain": "provider-neutral recommendation orchestration",
     "status": "active",
-    "version": "0.1.0"
+    "version": "0.2.0"
   },
   "research_question": "How can model and rule providers produce inspectable recommendations under one human-reviewed contract?",
   "hypotheses": [
@@ -18,6 +18,14 @@
   ],
   "loop": {"phase": "M1", "iteration": 1, "next_review": "after adapter replay is stable"},
   "experiments": [],
-  "artifacts": [],
+  "artifacts": [
+    {
+      "id": "A-fault-matrix",
+      "path": "eval/fault-matrix.json",
+      "kind": "offline contract and fault-injection matrix",
+      "supports_hypothesis": null,
+      "live_provider": false
+    }
+  ],
   "reviews": []
 }

@@ -1,6 +1,6 @@
 # 模型与方法融合：Agent 实现路线
 
-日期：2026-10-23。总蓝图和来源库统一保存在 [q-one-core](https://github.com/aidless/q-one-core/blob/main/docs/SYNTHESIS_BLUEPRINT.zh-CN.md)。[29条来源矩阵](https://github.com/aidless/q-one-core/blob/main/literature/MATRIX.zh-CN.md)记录采用候选与限制。以下全部是待实现路线，当前运行接口仅包含本地成本启发式。
+日期：2026-10-23。总蓝图和来源库统一保存在 [q-one-core](https://github.com/aidless/q-one-core/blob/main/docs/SYNTHESIS_BLUEPRINT.zh-CN.md)。[29条来源矩阵](https://github.com/aidless/q-one-core/blob/main/literature/MATRIX.zh-CN.md)记录采用候选与限制。下面的 P1–P3 仍是待执行的比较与接入计划。代码里另有 `qone_agent.runtime.run_model`（Ollama HTTP、Laya 子进程、云端 HTTP）。本仓库没有保存任何一次真实模型调用的回执；CLI 默认仍是本地成本启发式。
 
 ## 1. 两种模型角色
 

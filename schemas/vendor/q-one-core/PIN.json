@@ -1,0 +1,12 @@
+{
+  "repository": "https://github.com/aidless/q-one-core",
+  "commit": "2d243b33c0beede7cf05d1ab2212f5fb45d39c6a",
+  "committed_at": "2026-11-14T09:08:04Z",
+  "path": "src/qone_core/models.py",
+  "blob": "23fb7248e3c2623ba79e5d4762403abe8545a590",
+  "symbols": ["ValidationError", "_text", "_probability", "validate_recommendation"],
+  "upstream_lines": "ValidationError 10-11; _text 26-31; _probability 34-43; validate_recommendation 126-147",
+  "vendor_sha256": "05e8b9b157ecc0e21592b0d14f8a26fc87e24ef995f6ba3026b29a1c6c668c9f",
+  "retrieved": "2026-11-16",
+  "note": "q-one-core at this commit publishes schemas/decision.schema.json and does not publish a recommendation JSON Schema file. The recommendation contract is validate_recommendation in src/qone_core/models.py. This directory vendors that function."
+}

@@ -8,6 +8,8 @@
 
 ## Unreleased
 
+- Added an offline adapter × fault matrix and a vendored q-one-core recommendation validator pin.
+- Corrected the connectivity-receipt claim: no saved request to Ollama, Laya, or a cloud host is in this repository.
 - Added source-linked Chinese research synthesis and implementation priorities.
 - Clarified prototype status and pending real-model acceptance.
 
