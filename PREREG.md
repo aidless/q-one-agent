@@ -1,9 +1,11 @@
 # PREREG — Q-One Agent 预注册/规格说明
 
+> STATUS: WORK-IN-PROGRESS — not A yet.
+>
 > 本文件是 Q-One Agent（provider-neutral 推荐编排）的预注册规格。它把仓库
 > `research-manifest.json` 中已声明的假设与 `docs/MODEL_RESEARCH.md` 中的
 > 计划比较固化为「可证伪的假设 + 评测方案 + 成功标准 + 明确边界」。
-> 本文件**不**声称任何结果已达成——它只声明**将要/正在**检验什么、怎么检验、
+> 本文件**不**声称 H1 或 H2 已成立——它只声明**将要/正在**检验什么、怎么检验、
 > 以及哪些结论**明确不**由本仓产生。
 
 ## 1. 研究问题
@@ -17,11 +19,9 @@
 
 ## 2. 假设（来自 research-manifest.json，逐条原样）
 
-- **H1**：A narrow provider interface makes model routing replaceable without
-  changing the decision ledger.
+- **H1**：A narrow provider interface makes model routing replaceable without changing the decision ledger.
   （窄 provider 接口使得模型路由可在不改变决策账本的前提下替换。）
-- **H2**：Explicit evidence limitations reduce the chance that generated rationale
-  is mistaken for verified fact.
+- **H2**：Explicit evidence limitations reduce the chance that generated rationale is mistaken for verified fact.
   （显式证据局限降低了「生成的理由被误当成已验证事实」的概率。）
 
 ## 3. 评测方案（来自 docs/MODEL_RESEARCH.md 的 Planned comparisons）
@@ -53,12 +53,15 @@ prompt/adapter 版本、解码参数与工具权限、检索源与时间戳、�
 
 ## 5. 明确边界（本仓**不**证明什么）
 
-1. **不含任何真实模型准确率数据**：现有测试全部使用 mock HTTP 传输与 mock
-   截断结果（README「不证明什么」第 1 条、`MODEL_RESEARCH.md` "not a model
-   benchmark"）。C1–C3 是**计划**，尚未执行。
-2. **没有已集成并评测的真实 provider**：`MODEL_RESEARCH.md` 明确写 "no real
-   provider has been integrated or evaluated here yet"。Laya 的连通性收据是
-   合成/模拟，云端传输是 fixture 测试，**不是**线上 provider 验证。
+1. **不含任何真实模型准确率数据**：`tests/test_runtime.py` 使用 mock HTTP
+   传输与 mock 截断结果。`eval/fault-matrix.json` 里 Ollama 与云端的连接拒绝
+   是对本机已关闭端口的真实 TCP；超时、畸形 JSON、schema 非法输出和空内容是
+   注入的，不等待代码里写死的 120 秒或 150 秒。这些都不是模型准确率。
+   C1–C3 是**计划**，尚未执行。
+2. **适配器代码在仓库里，没有已保存的线上调用**：`src/qone_agent/runtime.py`
+   含 Ollama、Laya 与云端适配器。`docs/MODEL_RESEARCH.md` 写明没有已提交的真实
+   调用记录。连通性回执不是一份已经发出的请求记录，见 README「Connectivity
+   receipts」。云端传输是 fixture 测试，**不是**线上 provider 验证。C1–C3 仍未执行。
 3. **内置 CLI 的确定性成本启发式不替代** `run_model`（README 已声明）。
 4. **Laya 权重与 PyTorch 不在基础包**：`pip install '.[laya]'` 只装依赖，权重与
    运行时需另行提供；多语言 checkpoint 固定在
@@ -67,3 +70,12 @@ prompt/adapter 版本、解码参数与工具权限、检索源与时间戳、�
    （`requires_human=true`, `auto_eligible=false` 强制）。
 6. **未做校准声明**：`success_probability` 一律为 `null`，置信度不针对个人
    结果做经验验证（README「不证明什么」）。
+
+## 6. 本轮离线结果（不是 C1–C3）
+
+`eval/fault-matrix.json` 由 `make check` 离线重算。它记录三个适配器 × 五类故障：
+除 Laya 的 connection refused 抛出 `ConnectionRefusedError` 外，其余抛出
+`ProviderError`。没有一条返回 `cost-heuristic-v0.1`。这不支持、也不反驳 H1/H2，
+因为没有真实模型准确率、用户或采用数据。`research-manifest.json` 的
+`experiments` 因此仍为空。该矩阵记在 `artifacts` 的 `A-fault-matrix`，
+`supports_hypothesis` 为 null，`live_provider` 为 false。
